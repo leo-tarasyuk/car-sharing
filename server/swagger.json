@@ -1,0 +1,612 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Car-sharing API",
+        "description": "Car-sharing API",
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "host": "localhost:5000",
+    "tags": [
+        {
+            "name": "Car"
+        },
+        {
+            "name": "Cars"
+        },
+        {
+            "name": "Driver"
+        },
+        {
+            "name": "Run"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/car": {
+            "post": {
+                "tags": [
+                    "Car"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Car"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid car supplied"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Car"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CreatedCar"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid car supplied"
+                    }
+                }
+            }
+        },
+        "/car/{carId}": {
+            "get": {
+                "tags": [
+                    "Car"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "carId",
+                        "in": "path",
+                        "description": "Car id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid car supplied"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Car"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "carId",
+                        "in": "path",
+                        "description": "Car id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid car supplied"
+                    }
+                }
+            }
+        },
+        "/car/in_service": {
+            "put": {
+                "tags": [
+                    "Car"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CreatedCar"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid user supplied"
+                    }
+                }
+            }
+        },
+        "/cars/in_use": {
+            "get": {
+                "tags": [
+                    "Cars"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid cars supplied"
+                    }
+                }
+            }
+        },
+        "/cars/reserved": {
+            "get": {
+                "tags": [
+                    "Cars"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid cars supplied"
+                    }
+                }
+            }
+        },
+        "/driver/{driverId}": {
+            "get": {
+                "tags": [
+                    "Driver"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "driverId",
+                        "in": "path",
+                        "description": "Driver id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid driver supplied"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Driver"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "driverId",
+                        "in": "path",
+                        "description": "Driver id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid driver supplied"
+                    }
+                }
+            }
+        },
+        "/driver": {
+            "post": {
+                "tags": [
+                    "Driver"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Driver"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Driver"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CreatedDriver"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/run/on": {
+            "post": {
+                "tags": [
+                    "Run"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Run"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/run/off": {
+            "post": {
+                "tags": [
+                    "Run"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Run"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "CarModel": {
+            "type": "object",
+            "properties": {
+                "brand": {
+                    "type": "string"
+                },
+                "model": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "CreatedCarModel": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "brand": {
+                    "type": "string"
+                },
+                "model": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "Geometry": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "Point"
+                    ]
+                },
+                "coordinates": {
+                    "type": "array"
+                }
+            }
+        },
+        "CreatedGeometry": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "Point"
+                    ]
+                },
+                "coordinates": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    },
+                    "default": [
+                        125.6,
+                        10.1
+                    ]
+                }
+            }
+        },
+        "Location": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "Feature"
+                    ]
+                },
+                "geometry": {
+                    "$ref": "#/definitions/Geometry"
+                }
+            }
+        },
+        "CreatedLocation": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "Feature"
+                    ]
+                },
+                "geometry": {
+                    "$ref": "#/definitions/CreatedGeometry"
+                }
+            }
+        },
+        "Car": {
+            "type": "object",
+            "properties": {
+                "vin": {
+                    "type": "string"
+                },
+                "registration_number": {
+                    "type": "string"
+                },
+                "model": {
+                    "$ref": "#/definitions/CarModel"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "Free",
+                        "Reserved",
+                        "In use",
+                        "Unavailable",
+                        "In service"
+                    ]
+                },
+                "fuel_level": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "mileage": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "location": {
+                    "$ref": "#/definitions/Location"
+                }
+            }
+        },
+        "CreatedCar": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "vin": {
+                    "type": "string"
+                },
+                "registration_number": {
+                    "type": "string"
+                },
+                "current_run_id": {
+                    "type": "object"
+                },
+                "model": {
+                    "$ref": "#/definitions/CreatedCarModel"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "Free",
+                        "Reserved",
+                        "In use",
+                        "Unavailable",
+                        "In service"
+                    ]
+                },
+                "fuel_level": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "mileage": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "location": {
+                    "$ref": "#/definitions/CreatedLocation"
+                },
+                "booking_history": {
+                    "type": "array"
+                }
+            }
+        },
+        "Card": {
+            "type": "object",
+            "properties": {
+                "number": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "owner": {
+                    "type": "string"
+                },
+                "valid_through": {
+                    "type": "string"
+                }
+            }
+        },
+        "Driver": {
+            "type": "object",
+            "properties": {
+                "license_number": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "credit_card": {
+                    "$ref": "#/definitions/Card"
+                }
+            }
+        },
+        "CreatedCard": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "number": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "owner": {
+                    "type": "string"
+                },
+                "valid_through": {
+                    "type": "string"
+                }
+            }
+        },
+        "CreatedDriver": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "license_number": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "credit_card": {
+                    "$ref": "#/definitions/CreatedCard"
+                }
+            }
+        },
+        "Run": {
+            "type": "object",
+            "properties": {
+                "driverId": {
+                    "type": "string"
+                },
+                "carId": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
