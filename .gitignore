@@ -1,2 +1,2 @@
-.env
-car-sharing/node_modules
+server/.env
+server/node_modules

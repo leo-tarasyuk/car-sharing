@@ -1,8 +1,8 @@
 version: '3.7'
 
 services:
-  car-sharing:
-    build: ./car-sharing
+  server:
+    build: ./server
     restart: always
     ports:
       - '5000:5000'
@@ -10,7 +10,7 @@ services:
       mongo:
         condition: service_healthy
     env_file:
-      - .env
+      - ./server/.env
     networks:
       - node-network
   mongo:
@@ -20,8 +20,6 @@ services:
       - '27017:27017'
     volumes:
       - dbdata:/var/lib/mongo
-    env_file:
-      - .env
     healthcheck:
       test: ["CMD","mongosh", "--eval", "db.adminCommand('ping')"]
       timeout: 20s
