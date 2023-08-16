@@ -68,7 +68,7 @@ class CarService {
         const car = await Car.findOne({ vin: carData.vin });
 
         if (car) {
-            throw "Car was created";
+            throw Error("Car was created");
         } else {
             const newCar = new Car(carData);
             await newCar.save();
@@ -171,7 +171,7 @@ class CarService {
         if (cars[0]) {
             await this.overwriteCarInfo(car);
         } else {
-            throw "You can't update this car";
+            throw Error("You can't update this car");
         }
     }
 
@@ -188,7 +188,7 @@ class CarService {
         if (cars[0]?.booking_history_ids?.length >= 2) {
             await this.overwriteCarInfo(car);
         } else {
-            throw `You can't update this car`;
+            throw Error(`You can't update this car`);
         }
     }
 

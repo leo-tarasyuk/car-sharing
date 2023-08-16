@@ -1,6 +1,9 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
+import { validationResult } from "express-validator";
 
 import { carService } from "../services/car.service";
+
+import { ApiError } from "../exceptions/api.error";
 
 import { ICar, ICreateCar, IReservedCar } from "../dto/car.dto";
 
@@ -9,15 +12,27 @@ import { ICar, ICreateCar, IReservedCar } from "../dto/car.dto";
  *
  * @param {Request} req Request param
  * @param {Response} res Response param
+ * @param {NextFunction} next Next function
  * @return {Promise<void>}
  */
 export const postСarHandler = async (
     req: Request,
-    res: Response
+    res: Response,
+    next: NextFunction
 ): Promise<void> => {
-    const car: ICreateCar = req.body;
-    await carService.createCar(car);
-    res.send("Car was created");
+    try {
+        const car: ICreateCar = req.body;
+        const errors = validationResult(car);
+
+        if (!errors.isEmpty()) {
+            return next(ApiError.BadRequest('Validation error', errors.array()))
+        }
+
+        await carService.createCar(car);
+        res.send("Car was created");
+    } catch (e) {
+        next(e);
+    }
 };
 
 /**
@@ -25,18 +40,26 @@ export const postСarHandler = async (
  *
  * @param {Request} req Request param
  * @param {Response} res Response param
+ * @param {NextFunction} next Next function
  * @return {Promise<void>}
  */
 export const getCarHandler = async (
     req: Request,
-    res: Response
+    res: Response,
+    next: NextFunction
 ): Promise<void> => {
     try {
-        const carId: string = req.params.carId;
+        const errors = validationResult(req.params);
+
+        if (!errors.isEmpty()) {
+            return next(ApiError.BadRequest('Validation error', errors.array()))
+        }
+
+        const { carId } = req.params;
         const car = await carService.getCar(carId);
-        res.send(car);
+        res.json(car);
     } catch (e) {
-        res.send(e);
+        next(e);
     }
 };
 
@@ -45,18 +68,26 @@ export const getCarHandler = async (
  *
  * @param {Request} req Request param
  * @param {Response} res Response param
+ * @param {NextFunction} next Next function
  * @return {Promise<void>}
  */
 export const putCarInServiceHandler = async (
     req: Request,
-    res: Response
+    res: Response,
+    next: NextFunction
 ): Promise<void> => {
     try {
         const car: ICar = req.body;
+        const errors = validationResult(car);
+
+        if (!errors.isEmpty()) {
+            return next(ApiError.BadRequest('Validation error', errors.array()))
+        }
+
         await carService.changeCar(car);
         res.send("Car was updated");
     } catch (e) {
-        res.send(e);
+        next(e);
     }
 };
 
@@ -65,17 +96,26 @@ export const putCarInServiceHandler = async (
  *
  * @param {Request} req Request param
  * @param {Response} res Response param
+ * @param {NextFunction} next Next function
  * @return {Promise<void>}
  */
 export const putChangeCarLocationHandler = async (
     req: Request,
-    res: Response
+    res: Response,
+    next: NextFunction
 ): Promise<void> => {
     try {
         const car: ICar = req.body;
+        const errors = validationResult(car);
+
+        if (!errors.isEmpty()) {
+            return next(ApiError.BadRequest('Validation error', errors.array()))
+        }
+
         await carService.changeCarLocation(car);
+        res.send("Car was updated");
     } catch (e) {
-        res.send(e);
+        next(e);
     }
 };
 
@@ -84,18 +124,26 @@ export const putChangeCarLocationHandler = async (
  *
  * @param {Request} req Request param
  * @param {Response} res Response param
+ * @param {NextFunction} next Next function
  * @return {Promise<void>}
  */
 export const deleteCarHandler = async (
     req: Request,
-    res: Response
+    res: Response,
+    next: NextFunction
 ): Promise<void> => {
     try {
-        const carId: string = req.params.carId;
+        const errors = validationResult(req.params);
+
+        if (!errors.isEmpty()) {
+            return next(ApiError.BadRequest('Validation error', errors.array()))
+        }
+
+        const { carId } = req.params;
         await carService.deleteCar(carId);
         res.send(`Car was deleted`);
     } catch (e) {
-        res.send(e);
+        next(e);
     }
 };
 
@@ -104,17 +152,19 @@ export const deleteCarHandler = async (
  *
  * @param {Request} req Request param
  * @param {Response} res Response param
+ * @param {NextFunction} next Next function
  * @return {Promise<void>}
  */
 export const getUsedCarsHandler = async (
     req: Request,
-    res: Response
+    res: Response,
+    next: NextFunction
 ): Promise<void> => {
     try {
         const cars: Array<ICar> = await carService.getUsedCars();
-        res.send(cars);
+        res.json(cars);
     } catch (e) {
-        res.send(e);
+        next(e);
     }
 };
 
@@ -123,16 +173,18 @@ export const getUsedCarsHandler = async (
  *
  * @param {Request} req Request param
  * @param {Response} res Response param
+ * @param {NextFunction} next Next function
  * @return {Promise<void>}
  */
 export const getReservedCarsHandler = async (
     req: Request,
-    res: Response
+    res: Response,
+    next: NextFunction
 ): Promise<void> => {
     try {
         const cars: Array<IReservedCar> = await carService.getReservedCars();
-        res.send(cars);
+        res.json(cars);
     } catch (e) {
-        res.send(e);
+        next(e);
     }
 };

@@ -3,10 +3,9 @@ import { Card } from "../models/card.model";
 
 import { IDriver, ICreateDriver } from "../dto/driver.dto";
 
-class DriverService {
+export class DriverService {
     async createDriver(driverInfo: ICreateDriver): Promise<void> {
-        const { license_number, first_name, last_name, credit_card } =
-            driverInfo;
+        const { license_number, first_name, last_name, credit_card } = driverInfo;
 
         let credit_card_id = null;
 
@@ -22,12 +21,10 @@ class DriverService {
             credit_card_id = newCreditCard._id;
         }
 
-        const driver = await Driver.findOne({
-            license_number: license_number,
-        });
+        const driver = await Driver.findOne({ license_number });
 
         if (driver) {
-            throw `Driver was created`;
+            throw Error(`Driver was created`);
         } else {
             const newDriver = new Driver({
                 license_number,
@@ -62,7 +59,7 @@ class DriverService {
                 $unset: ["credit_card_id"],
             },
         ]);
-        console.log(drivers);
+
         return drivers[0];
     }
 

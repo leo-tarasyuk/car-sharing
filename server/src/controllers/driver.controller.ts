@@ -1,6 +1,9 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
+import { validationResult } from "express-validator";
 
 import { driverService } from "../services/driver.service";
+
+import { ApiError } from "../exceptions/api.error";
 
 import { IDriver, ICreateDriver } from "../dto/driver.dto";
 
@@ -9,18 +12,27 @@ import { IDriver, ICreateDriver } from "../dto/driver.dto";
  *
  * @param {Request} req Request param
  * @param {Response} res Response param
+ * @param {NextFunction} next Next function
  * @return {Promise<void>}
  */
 export const postDriverHandler = async (
     req: Request,
-    res: Response
-): Promise<void> => {
+    res: Response,
+    next: NextFunction
+): Promise<Response<string, Record<string, string>> | void> => {
     try {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return next(ApiError.BadRequest('Validation error', errors.array()))
+        }
+
         const driver: ICreateDriver = req.body;
         await driverService.createDriver(driver);
-        res.send("Driver was created");
+
+        return res.send("Driver was created");
     } catch (e) {
-        res.send(e);
+        next(e);
     }
 };
 
@@ -29,18 +41,27 @@ export const postDriverHandler = async (
  *
  * @param {Request} req Request param
  * @param {Response} res Response param
+ * @param {NextFunction} next Next function
  * @return {Promise<void>}
  */
 export const getDriverHandler = async (
     req: Request,
-    res: Response
+    res: Response,
+    next: NextFunction
 ): Promise<void> => {
     try {
+        const errors = validationResult(req.params);
+
+        if (!errors.isEmpty()) {
+            return next(ApiError.BadRequest('Validation error', errors.array()))
+        }
+
         const driverId: string = req.params.driverId;
         const driver = await driverService.getDriver(driverId);
-        res.send(driver);
+
+        res.json(driver);
     } catch (e) {
-        res.send(e);
+        next(e);
     }
 };
 
@@ -49,18 +70,26 @@ export const getDriverHandler = async (
  *
  * @param {Request} req Request param
  * @param {Response} res Response param
+ * @param {NextFunction} next Next function
  * @return {Promise<void>}
  */
 export const putDriverHandler = async (
     req: Request,
-    res: Response
+    res: Response,
+    next: NextFunction
 ): Promise<void> => {
     try {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return next(ApiError.BadRequest('Validation error', errors.array()))
+        }
+
         const driver: IDriver = req.body;
         await driverService.changeDriver(driver);
         res.send(`Driver was updated`);
     } catch (error) {
-        res.send(error);
+        next(error);
     }
 };
 
@@ -69,17 +98,25 @@ export const putDriverHandler = async (
  *
  * @param {Request} req Request param
  * @param {Response} res Response param
+ * @param {NextFunction} next Next function
  * @return {Promise<void>}
  */
 export const deleteDriverHandler = async (
     req: Request,
-    res: Response
+    res: Response,
+    next: NextFunction
 ): Promise<void> => {
     try {
+        const errors = validationResult(req.params);
+
+        if (!errors.isEmpty()) {
+            return next(ApiError.BadRequest('Validation error', errors.array()))
+        }
+
         const driverId: string = req.params.driverId;
         await driverService.deleteDriver(driverId);
         res.send(`Driver was deleted`);
     } catch (e) {
-        res.send(e);
+        next(e);
     }
 };
