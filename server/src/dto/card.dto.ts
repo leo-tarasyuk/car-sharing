@@ -2,7 +2,7 @@ import { Types } from "mongoose";
 
 // Interfaces
 export interface ICreateCard {
-    number: string;
+    number: number;
     owner: string;
     valid_through: string;
 }

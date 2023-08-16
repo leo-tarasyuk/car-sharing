@@ -1,4 +1,6 @@
 import { Router } from "express";
+import { body } from "express-validator";
+
 import {
     postRentHandler,
     postStopHandler,
@@ -6,5 +8,15 @@ import {
 
 export const runRouter = Router();
 
-runRouter.post("/on", postRentHandler);
-runRouter.post("/off", postStopHandler);
+runRouter.post(
+    "/on",
+    body("driverId").notEmpty().trim(),
+    body("carId").notEmpty().trim(),
+    postRentHandler
+);
+runRouter.post(
+    "/off",
+    body("driverId").notEmpty().trim(),
+    body("carId").notEmpty().trim(),
+    postStopHandler
+);

@@ -14,17 +14,9 @@ class RunService {
         const driver = await Driver.findOne({ _id: driverId });
         const car = await Car.findOne({ _id: carId, status: CarStatus.Free });
 
-        if (!driver?._id) {
-            throw `No driver`;
-        }
-
-        if (!car?._id) {
-            throw `No car`;
-        }
-
-        if (car.current_run_id) {
-            throw `Car is running`;
-        }
+        if (!driver?._id) throw Error(`No driver`);
+        if (!car?._id) throw Error(`No car`);
+        if (car.current_run_id) throw Error(`Car is running`);
 
         const newRun = new Run({
             start_fuel_level: car.fuel_level,
@@ -48,13 +40,8 @@ class RunService {
         const driver = await Driver.findOne({ _id: driverId });
         const car = await Car.findOne({ _id: carId, status: CarStatus.In_use });
 
-        if (!driver?._id) {
-            throw `No driver`;
-        }
-
-        if (!car?._id) {
-            throw `No car`;
-        }
+        if (!driver?._id) throw Error(`No driver`);
+        if (!car?._id) throw Error(`No car`);
 
         const updatedRun = await Run.findOneAndUpdate(
             { _id: car.current_run_id },
@@ -66,9 +53,7 @@ class RunService {
             }
         );
 
-        if (!updatedRun?._id) {
-            throw `Run is not found`;
-        }
+        if (!updatedRun?._id) throw Error(`Run is not found`);
 
         await Car.findByIdAndUpdate(car._id, {
             $set: { current_run_id: null, status: CarStatus.Free },
