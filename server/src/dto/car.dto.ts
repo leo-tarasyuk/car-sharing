@@ -16,7 +16,6 @@ export interface ICreateCar {
     vin: string;
     registration_number: number;
     model: ICreateModelCar;
-    status: CarStatus;
     fuel_level: number;
     mileage: number;
     location: ICreateLocation;
@@ -25,6 +24,7 @@ export interface ICreateCar {
 export interface ICar extends ICreateCar {
     readonly _id: Types.ObjectId;
     model: IModelCar;
+    status: CarStatus;
     location: ILocation;
 }
 
