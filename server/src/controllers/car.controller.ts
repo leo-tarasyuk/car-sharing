@@ -25,11 +25,13 @@ export const postСarHandler = async (
         const errors = validationResult(car);
 
         if (!errors.isEmpty()) {
-            return next(ApiError.BadRequest('Validation error', errors.array()))
+            return next(
+                ApiError.BadRequest("Validation error", errors.array())
+            );
         }
 
         await carService.createCar(car);
-        res.send("Car was created");
+        res.status(201).send("Car was created");
     } catch (e) {
         next(e);
     }
@@ -52,7 +54,9 @@ export const getCarHandler = async (
         const errors = validationResult(req.params);
 
         if (!errors.isEmpty()) {
-            return next(ApiError.BadRequest('Validation error', errors.array()))
+            return next(
+                ApiError.BadRequest("Validation error", errors.array())
+            );
         }
 
         const { carId } = req.params;
@@ -81,7 +85,9 @@ export const putCarInServiceHandler = async (
         const errors = validationResult(car);
 
         if (!errors.isEmpty()) {
-            return next(ApiError.BadRequest('Validation error', errors.array()))
+            return next(
+                ApiError.BadRequest("Validation error", errors.array())
+            );
         }
 
         await carService.changeCar(car);
@@ -109,7 +115,9 @@ export const putChangeCarLocationHandler = async (
         const errors = validationResult(car);
 
         if (!errors.isEmpty()) {
-            return next(ApiError.BadRequest('Validation error', errors.array()))
+            return next(
+                ApiError.BadRequest("Validation error", errors.array())
+            );
         }
 
         await carService.changeCarLocation(car);
@@ -136,7 +144,9 @@ export const deleteCarHandler = async (
         const errors = validationResult(req.params);
 
         if (!errors.isEmpty()) {
-            return next(ApiError.BadRequest('Validation error', errors.array()))
+            return next(
+                ApiError.BadRequest("Validation error", errors.array())
+            );
         }
 
         const { carId } = req.params;
