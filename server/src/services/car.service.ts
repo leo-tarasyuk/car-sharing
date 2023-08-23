@@ -34,8 +34,8 @@ class CarService {
     }
 
     async createCar(carInfo: ICreateCar): Promise<void> {
+        const reqModel = await CarModel.findOne(carInfo.model);
         const reqGeometry = await Geometry.findOne(carInfo.location.geometry);
-        const reqModel = await Geometry.findOne(carInfo.model);
         const newModel = new CarModel(carInfo.model);
         const newGeometry = new Geometry(carInfo.location.geometry);
         const model = reqModel ? reqModel : await newModel.save();

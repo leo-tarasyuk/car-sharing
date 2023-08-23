@@ -13,8 +13,8 @@ export class DriverService {
             ? await Card.findOne({ number: credit_card.number })
             : null;
 
-        if (reqCreditCard) {
-            credit_card_id = reqCreditCard;
+        if (reqCreditCard?._id) {
+            credit_card_id = reqCreditCard._id;
         } else {
             const newCreditCard = new Card(credit_card);
             await newCreditCard.save();
